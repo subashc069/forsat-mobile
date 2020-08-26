@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:forsat/application/repositories/auth_repository.dart';
+import 'package:forsat/application/state/auth_state.dart';
 import 'package:forsat/presentation/opportunities/opportunities_page.dart';
 import 'package:forsat/router/route_constants.dart';
 import 'package:forsat/router/router.dart';
+import 'package:forsat/values/branding_color.dart';
+import 'package:states_rebuilder/states_rebuilder.dart';
 
 void main() {
   runApp(Forsat());
@@ -11,27 +15,19 @@ class Forsat extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Forsat',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      onGenerateRoute: Router.onGenerateRoute,
-      initialRoute: homeRoute,
-    );
+    return Injector(
+        inject: [Inject<AuthState>(() => AuthState(AuthRepositoryImpl()))],
+        builder: (context) {
+          return MaterialApp(
+            title: 'Forsat',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primarySwatch: brandingColor,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            onGenerateRoute: Router.onGenerateRoute,
+            initialRoute: signInRoute,
+          );
+        });
   }
 }

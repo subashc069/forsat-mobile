@@ -12,10 +12,10 @@ class _OpportunitiesPageState extends State<OpportunitiesPage>
     super.build(context);
     return Scaffold(
         appBar: AppBar(
-      title: Text("Homepage"),
+      title: Text("Opportunities"),
     ));
   }
 
   @override
-  bool get wantKeepAlive => throw UnimplementedError();
+  bool get wantKeepAlive => true;
 }
