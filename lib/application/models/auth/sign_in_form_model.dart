@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:forsat/application/classes/errors/common_error.dart';
 import 'package:forsat/application/state/auth_state.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
