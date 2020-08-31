@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:forsat/application/models/auth/sign_up_form_model.dart';
 import 'package:forsat/router/route_constants.dart';
 import 'package:forsat/values/images.dart';
+import 'package:forsat/widgets/show_snackbar.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -24,8 +25,7 @@ class _SignUpPageState extends State<SignUpPage> {
         body: Injector(
             inject: [Inject<SignUpFormModel>(() => SignUpFormModel())],
             builder: (context) {
-              final _singletonSignUpFormModel =
-                  Injector.getAsReactive<SignUpFormModel>();
+              final _singletonSignUpFormModel = RM.get<SignUpFormModel>();
               return Container(
                 padding: EdgeInsets.all(16.0),
                 child: ListView(
@@ -116,6 +116,28 @@ class _SignUpPageState extends State<SignUpPage> {
                         );
                       },
                     ),
+                    buildSizedBox(15.0),
+                    StateBuilder<SignUpFormModel>(
+                      builder: (_, signUpFormModel) {
+                        return TextFormField(
+                          onChanged: (String passwordConfirmation) {
+                            signUpFormModel.setState(
+                                (state) => state.setPasswordConfirmation(
+                                    passwordConfirmation),
+                                catchError: true);
+                          },
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              errorText: signUpFormModel.hasError
+                                  ? signUpFormModel.error.message
+                                  : null,
+                              prefixIcon: Icon(Icons.lock),
+                              hintText: "Password Confirm",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30.0))),
+                        );
+                      },
+                    ),
                     buildSizedBox(25.0),
                     StateBuilder(
                       observe: () => _singletonSignUpFormModel,
@@ -124,9 +146,17 @@ class _SignUpPageState extends State<SignUpPage> {
                           onPressed: () {
                             if (!_singletonSignUpFormModel.state
                                 .validateData()) {
-                              _key.currentState.showSnackBar(SnackBar(
-                                  backgroundColor: Colors.red,
-                                  content: Text("Data is Invalid")));
+                              showSnackbar(
+                                  key: _key, message: "Data is Invalid");
+                            } else {
+                              _singletonSignUpFormModel.setState(
+                                (signUpFormState) =>
+                                    signUpFormState.submitSignUp(),
+                                onError: (context, error) => showSnackbar(
+                                    key: _key,
+                                    color: Colors.red,
+                                    message: "${error.message}"),
+                              );
                             }
                           },
                           height: 55.0,

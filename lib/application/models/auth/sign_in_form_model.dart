@@ -24,8 +24,8 @@ class SignInFormModel {
     this.password = password;
   }
 
-  submitSignIn() async {
-    await _authState.signIn(email: this.email, password: this.password);
+  Future<void> submitSignIn() async {
+    return await _authState.signIn(email: this.email, password: this.password);
   }
 
   bool validateData() {

@@ -3,6 +3,7 @@ import 'package:forsat/presentation/auth/account_page.dart';
 import 'package:forsat/presentation/favourites/favourites_page.dart';
 import 'package:forsat/presentation/forum/questions_page.dart';
 import 'package:forsat/presentation/opportunities/opportunities_page.dart';
+import 'package:forsat/values/branding_color.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -45,34 +46,34 @@ class _HomePageState extends State<HomePage> {
                 title: Text(
                   "Opportunities",
                   style: TextStyle(
-                      color: _selectedIndex == 0 ? Colors.blue : Colors.grey),
+                      color: _selectedIndex == 0 ? brandingColor : Colors.grey),
                 ),
                 icon: Icon(Icons.home,
-                    color: _selectedIndex == 0 ? Colors.blue : Colors.grey)),
+                    color: _selectedIndex == 0 ? brandingColor : Colors.grey)),
             BottomNavigationBarItem(
                 title: Text(
                   "Forum",
                   style: TextStyle(
-                      color: _selectedIndex == 1 ? Colors.blue : Colors.grey),
+                      color: _selectedIndex == 1 ? brandingColor : Colors.grey),
                 ),
                 icon: Icon(Icons.chat,
-                    color: _selectedIndex == 1 ? Colors.blue : Colors.grey)),
+                    color: _selectedIndex == 1 ? brandingColor : Colors.grey)),
             BottomNavigationBarItem(
                 title: Text(
                   "Favourites",
                   style: TextStyle(
-                      color: _selectedIndex == 2 ? Colors.blue : Colors.grey),
+                      color: _selectedIndex == 2 ? brandingColor : Colors.grey),
                 ),
                 icon: Icon(Icons.favorite,
-                    color: _selectedIndex == 2 ? Colors.blue : Colors.grey)),
+                    color: _selectedIndex == 2 ? brandingColor : Colors.grey)),
             BottomNavigationBarItem(
                 title: Text(
                   "Account",
                   style: TextStyle(
-                      color: _selectedIndex == 3 ? Colors.blue : Colors.grey),
+                      color: _selectedIndex == 3 ? brandingColor : Colors.grey),
                 ),
                 icon: Icon(Icons.person,
-                    color: _selectedIndex == 3 ? Colors.blue : Colors.grey)),
+                    color: _selectedIndex == 3 ? brandingColor : Colors.grey)),
           ]),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:forsat/application/models/auth/sign_in_form_model.dart';
 import 'package:forsat/router/route_constants.dart';
 import 'package:forsat/values/images.dart';
+import 'package:forsat/widgets/show_snackbar.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 class SignInPage extends StatefulWidget {
@@ -15,17 +16,16 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         key: _key,
-        // appBar: AppBar(
-        //   backgroundColor: Colors.transparent,
-        //   elevation: 0.0,
-        //   brightness: Brightness.light,
-        //   automaticallyImplyLeading: false,
-        // ),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          brightness: Brightness.light,
+          automaticallyImplyLeading: false,
+        ),
         body: Injector(
             inject: [Inject<SignInFormModel>(() => SignInFormModel())],
             builder: (context) {
-              final _singletonSignInFormModel =
-                  Injector.getAsReactive<SignInFormModel>();
+              final _singletonSignInFormModel = RM.get<SignInFormModel>();
               return Container(
                 padding: EdgeInsets.all(16.0),
                 child: ListView(
@@ -84,13 +84,19 @@ class _SignInPageState extends State<SignInPage> {
                           onPressed: () {
                             if (!_singletonSignInFormModel.state
                                 .validateData()) {
-                              _key.currentState.showSnackBar(SnackBar(
-                                  backgroundColor: Colors.red,
-                                  content: Text("Data is Invalid")));
+                              showSnackbar(
+                                  key: _key, message: "Data is Invalid");
                             } else {
                               _singletonSignInFormModel.setState(
-                                  (signInFormState) =>
-                                      signInFormState.submitSignIn());
+                                (signInFormState) async {
+                                  await signInFormState.submitSignIn();
+                                  Navigator.popAndPushNamed(context, homeRoute);
+                                },
+                                onError: (context, error) => showSnackbar(
+                                    key: _key,
+                                    color: Colors.red,
+                                    message: "${error.message}"),
+                              );
                             }
                           },
                           height: 55.0,

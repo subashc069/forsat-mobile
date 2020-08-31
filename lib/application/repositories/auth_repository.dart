@@ -1,32 +1,59 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:forsat/application/classes/errors/common_error.dart';
 import 'package:forsat/application/forsat_api.dart';
-import 'package:http/http.dart' as http;
+import 'package:forsat/application/storage/local_storage.dart';
+import 'package:forsat/application/storage/storage_key.dart';
 
 abstract class AuthRepository {
   Future signIn({
     @required String email,
     @required String password,
   });
+  Future signUp(
+      {@required String firstName,
+      @required String lastName,
+      @required String email,
+      @required String password,
+      @required String passwordConfirmation});
 }
 
 class AuthRepositoryImpl extends AuthRepository {
   @override
   Future signIn({String email, String password}) async {
-    // Dio dio = Dio();
-    // String url = "http://forsat.merobhakaari.com/api/auth/login";
-    print("Signing In");
-    // Response response = await dio.post(
-    //     "http://forsat.merobhakaari.com/api/auth/login",
-    //     data: {"email": email, "password": password});
+    try {
+      Response response = await ForsatApi.dio.post("/api/auth/login",
+          data: {"email": email, "password": password});
+      String accessToken = response.data["accessToken"];
+      String expiresAt = response.data["expires_at"];
+      print(accessToken);
+      print(expiresAt);
+      await LocalStorage.setItem(TOKEN, accessToken);
+      await LocalStorage.setItem(TOKEN_EXPIRATION, expiresAt);
+      return;
+    } on DioError catch (e) {
+      showNetworkError(e);
+    }
+  }
 
-    // var response =
-    //     await http.post(url, body: {'email': email, 'password': password});
-    // Response response =
-    //     await dio.get("http://www.omdbapi.com/?i=tt3896198&apikey=62ea60e0");
-    var response = await ForsatApi.dio
-        .post("/api/auth/login", data: {"email": email, "password": password});
-    print("Signed In");
-    print(response);
+  @override
+  Future signUp(
+      {String firstName,
+      String lastName,
+      String email,
+      String password,
+      String passwordConfirmation}) async {
+    try {
+      var response = await ForsatApi.dio.post("/api/auth/register", data: {
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "password": password,
+        "password_confirmation": passwordConfirmation,
+      });
+      print(response);
+    } on DioError catch (e) {
+      showNetworkError(e);
+    }
   }
 }
