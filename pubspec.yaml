@@ -28,6 +28,10 @@ dependencies:
   states_rebuilder: ^2.3.1
   shared_preferences: ^0.5.10
   flutter_secure_storage: ^3.3.3
+  flutter_launcher_name: "^0.0.1"
+  
+flutter_launcher_name:
+  name: "Nexus"
 
 
 

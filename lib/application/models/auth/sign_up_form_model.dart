@@ -6,9 +6,17 @@ class SignUpFormModel {
   final AuthState _authState = Injector.get<AuthState>();
   String firstName;
   String lastName;
+  String address;
+  String phoneNumber;
+  String schoolName;
+  String parentName;
+  String parentPhoneNumber;
+  int programId;
+  int courseId;
   String email;
   String password;
   String passwordConfirmation;
+  String profilePicture;
 
   void setFirstName(String firstName) {
     this.firstName = firstName;
@@ -18,10 +26,42 @@ class SignUpFormModel {
     this.lastName = lastName;
   }
 
+  void setAddress(String address) {
+    this.address = address;
+  }
+
+  void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  void setSchoolName(String schoolName) {
+    this.schoolName = schoolName;
+  }
+
+  void setParentName(String parentName) {
+    this.parentName = parentName;
+  }
+
+  void setParentPhoneNumber(String parentPhoneNumber) {
+    this.parentPhoneNumber = parentPhoneNumber;
+  }
+
+  void setProgramId(int programId) {
+    this.programId = programId;
+  }
+
+  void setCourseId(int courseId) {
+    this.courseId = courseId;
+  }
+
+  void setProfilePicture(String profilePicture) {
+    this.profilePicture = profilePicture;
+  }
+
   void setEmail(String email) {
     //email validation
     if (!validateEmail(email)) {
-      throw CommonError(message: "Invalid Message");
+      throw CommonError(message: "Invalid Email");
     }
     this.email = email;
   }
@@ -59,8 +99,16 @@ class SignUpFormModel {
     await _authState.signUp(
         firstName: this.firstName,
         lastName: this.lastName,
+        address: this.address,
+        phoneNumber: this.phoneNumber,
+        schoolName: this.schoolName,
+        parentName: this.parentName,
+        parentPhoneNumber: this.parentPhoneNumber,
+        programId: this.programId,
+        courseId: this.courseId,
         email: this.email,
         password: this.password,
-        passwordConfirmation: this.passwordConfirmation);
+        passwordConfirmation: this.passwordConfirmation,
+        profilePicture: this.profilePicture);
   }
 }

@@ -13,9 +13,18 @@ abstract class AuthRepository {
   Future signUp(
       {@required String firstName,
       @required String lastName,
+      @required String address,
+      @required String phoneNumber,
+      @required String schoolName,
+      @required String parentName,
+      @required String parentPhoneNumber,
+      @required int programId,
+      @required int courseId,
       @required String email,
       @required String password,
-      @required String passwordConfirmation});
+      @required String passwordConfirmation,
+      String profilePicture});
+  Future signOut();
 }
 
 class AuthRepositoryImpl extends AuthRepository {
@@ -40,18 +49,48 @@ class AuthRepositoryImpl extends AuthRepository {
   Future signUp(
       {String firstName,
       String lastName,
+      String address,
+      String phoneNumber,
+      String schoolName,
+      String parentName,
+      String parentPhoneNumber,
+      int programId,
+      int courseId,
       String email,
       String password,
-      String passwordConfirmation}) async {
+      String passwordConfirmation,
+      String profilePicture}) async {
     try {
       var response = await ForsatApi.dio.post("/api/auth/register", data: {
         "firstName": firstName,
         "lastName": lastName,
+        "address": address,
+        "phoneNumber": phoneNumber,
+        "schoolName": schoolName,
+        "parentName": parentName,
+        "parentPhoneNumber": parentPhoneNumber,
+        "programId": programId,
+        "courseId": courseId,
         "email": email,
         "password": password,
         "password_confirmation": passwordConfirmation,
+        "profilePicture": profilePicture,
       });
       print(response);
+    } on DioError catch (e) {
+      showNetworkError(e);
+    }
+  }
+
+  @override
+  Future signOut() async {
+    try {
+      Response response = await ForsatApi.dio.get("/api/auth/logout",
+          options: Options(headers: {
+            'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
+          }));
+      print(response);
+      return;
     } on DioError catch (e) {
       showNetworkError(e);
     }
