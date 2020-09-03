@@ -55,7 +55,11 @@ class SignUpFormModel {
   }
 
   void setProfilePicture(String profilePicture) {
-    this.profilePicture = profilePicture;
+    if (profilePicture == null) {
+      this.profilePicture = "http://www.fb.com";
+    } else {
+      this.profilePicture = profilePicture;
+    }
   }
 
   void setEmail(String email) {

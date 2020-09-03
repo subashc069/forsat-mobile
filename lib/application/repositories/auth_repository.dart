@@ -76,7 +76,13 @@ class AuthRepositoryImpl extends AuthRepository {
         "password_confirmation": passwordConfirmation,
         "profilePicture": profilePicture,
       });
-      print(response);
+      String accessToken = response.data["accessToken"];
+      String expiresAt = response.data["expires_at"];
+      print(accessToken);
+      print(expiresAt);
+      await LocalStorage.setItem(TOKEN, accessToken);
+      await LocalStorage.setItem(TOKEN_EXPIRATION, expiresAt);
+      return;
     } on DioError catch (e) {
       showNetworkError(e);
     }
@@ -89,6 +95,7 @@ class AuthRepositoryImpl extends AuthRepository {
           options: Options(headers: {
             'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
           }));
+      await LocalStorage.clearStorage();
       print(response);
       return;
     } on DioError catch (e) {

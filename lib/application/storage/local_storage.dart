@@ -23,4 +23,8 @@ class LocalStorage {
   static String getItem(String key) {
     return _sharedPreferences.getString(key);
   }
+
+  static clearStorage() {
+    _sharedPreferences.clear();
+  }
 }

@@ -12,6 +12,8 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
+  String dropdownValue = 'one';
+  var _list = ["One", "two", "three", "four"];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,6 +72,158 @@ class _SignUpPageState extends State<SignUpPage> {
                                   : null,
                               prefixIcon: Icon(Icons.person),
                               hintText: "Last Name",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30.0))),
+                        );
+                      },
+                    ),
+                    buildSizedBox(15.0),
+                    StateBuilder<SignUpFormModel>(
+                      builder: (context, signUpFormModel) {
+                        return TextFormField(
+                          onChanged: (String phoneNumber) {
+                            signUpFormModel.setState(
+                                (state) => state.setPhoneNumber(phoneNumber),
+                                catchError: true);
+                          },
+                          decoration: InputDecoration(
+                              errorText: signUpFormModel.hasError
+                                  ? signUpFormModel.error.message
+                                  : null,
+                              prefixIcon: Icon(Icons.phone),
+                              hintText: "Phone Number",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30.0))),
+                        );
+                      },
+                    ),
+                    buildSizedBox(15.0),
+                    StateBuilder<SignUpFormModel>(
+                      builder: (context, signUpFormModel) {
+                        return TextFormField(
+                          onChanged: (String address) {
+                            signUpFormModel.setState(
+                                (state) => state.setAddress(address),
+                                catchError: true);
+                          },
+                          decoration: InputDecoration(
+                              errorText: signUpFormModel.hasError
+                                  ? signUpFormModel.error.message
+                                  : null,
+                              prefixIcon: Icon(Icons.add_location),
+                              hintText: "Address",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30.0))),
+                        );
+                      },
+                    ),
+                    buildSizedBox(15.0),
+                    StateBuilder<SignUpFormModel>(
+                      builder: (context, signUpFormModel) {
+                        return TextFormField(
+                          onChanged: (String schoolName) {
+                            signUpFormModel.setState(
+                                (state) => state.setSchoolName(schoolName),
+                                catchError: true);
+                          },
+                          decoration: InputDecoration(
+                              errorText: signUpFormModel.hasError
+                                  ? signUpFormModel.error.message
+                                  : null,
+                              prefixIcon: Icon(Icons.school),
+                              hintText: "School's Name ",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30.0))),
+                        );
+                      },
+                    ),
+                    buildSizedBox(15.0),
+                    StateBuilder<SignUpFormModel>(
+                      builder: (context, signUpFormModel) {
+                        return TextFormField(
+                          onChanged: (String parentName) {
+                            signUpFormModel.setState(
+                                (state) => state.setParentName(parentName),
+                                catchError: true);
+                          },
+                          decoration: InputDecoration(
+                              errorText: signUpFormModel.hasError
+                                  ? signUpFormModel.error.message
+                                  : null,
+                              prefixIcon: Icon(Icons.people),
+                              hintText: "Parent's Name",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30.0))),
+                        );
+                      },
+                    ),
+                    buildSizedBox(15.0),
+                    StateBuilder<SignUpFormModel>(
+                      builder: (context, signUpFormModel) {
+                        return TextFormField(
+                          onChanged: (String parentPhoneNumber) {
+                            signUpFormModel.setState(
+                                (state) => state
+                                    .setParentPhoneNumber(parentPhoneNumber),
+                                catchError: true);
+                          },
+                          decoration: InputDecoration(
+                              errorText: signUpFormModel.hasError
+                                  ? signUpFormModel.error.message
+                                  : null,
+                              prefixIcon: Icon(Icons.phone),
+                              hintText: "Parent's Phone Number",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30.0))),
+                        );
+                      },
+                    ),
+                    buildSizedBox(15.0),
+                    StateBuilder<SignUpFormModel>(
+                      builder: (context, signUpFormModel) {
+                        return TextFormField(
+                          onChanged: (String programId) {
+                            int intProgramId = int.parse(programId);
+                            signUpFormModel.setState(
+                                (state) => state.setProgramId(intProgramId),
+                                catchError: true);
+                          },
+                          decoration: InputDecoration(
+                              errorText: signUpFormModel.hasError
+                                  ? signUpFormModel.error.message
+                                  : null,
+                              prefixIcon: Icon(Icons.perm_identity),
+                              hintText: "Choose Program",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30.0))),
+                        );
+                      },
+                    ),
+                    StateBuilder<SignUpFormModel>(
+                        builder: (context, signupFormModel) {
+                      return Row(
+                        children: <Widget>[
+                          Text("Choose A Program"),
+                          DropdownButtonFormField(items: null, onChanged: null)
+                        ],
+                      );
+                    }),
+                    buildSizedBox(15.0),
+                    StateBuilder<SignUpFormModel>(
+                      builder: (context, signUpFormModel) {
+                        return TextFormField(
+                          onChanged: (String courseId) {
+                            int intCourseId = int.parse(courseId);
+                            signUpFormModel.setState(
+                                (state) => state.setCourseId(intCourseId),
+                                catchError: true);
+                          },
+                          decoration: InputDecoration(
+                              errorText: signUpFormModel.hasError
+                                  ? signUpFormModel.error.message
+                                  : null,
+                              prefixIcon: Icon(Icons.perm_media),
+                              hintText: "Choose Course",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30.0))),
                         );
@@ -138,6 +292,27 @@ class _SignUpPageState extends State<SignUpPage> {
                         );
                       },
                     ),
+                    buildSizedBox(15.0),
+                    StateBuilder<SignUpFormModel>(
+                      builder: (context, signUpFormModel) {
+                        return TextFormField(
+                          onChanged: (String profilePicture) {
+                            signUpFormModel.setState(
+                                (state) =>
+                                    state.setProfilePicture(profilePicture),
+                                catchError: true);
+                          },
+                          decoration: InputDecoration(
+                              errorText: signUpFormModel.hasError
+                                  ? signUpFormModel.error.message
+                                  : null,
+                              prefixIcon: Icon(Icons.add_a_photo),
+                              hintText: "Profile Picture",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30.0))),
+                        );
+                      },
+                    ),
                     buildSizedBox(25.0),
                     StateBuilder(
                       observe: () => _singletonSignUpFormModel,
@@ -150,8 +325,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                   key: _key, message: "Data is Invalid");
                             } else {
                               _singletonSignUpFormModel.setState(
-                                (signUpFormState) =>
-                                    signUpFormState.submitSignUp(),
+                                (signUpFormState) async {
+                                  await signUpFormState.submitSignUp();
+                                  Navigator.popAndPushNamed(context, homeRoute);
+                                },
                                 onError: (context, error) => showSnackbar(
                                     key: _key,
                                     color: Colors.red,
